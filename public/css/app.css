@@ -1,0 +1,72 @@
+@import url(https://fonts.googleapis.com/css?family=Nunito);a {
+  color: #3490dc;
+}
+
+button {
+  border: 0;
+  margin-right: 3px;
+  margin-left: 3px;
+}
+
+button.active {
+  background-color: #3490dc;
+  color: white;
+}
+
+table tr th,
+table tr td {
+  border-collapse: collapse;
+  padding: 1px 3px;
+}
+
+table thead tr th {
+  border-bottom: 1px solid #3490dc;
+}
+
+table thead.primary {
+  background-color: #3490dc;
+  color: white;
+}
+
+table tbody tr:hover td {
+  background-color: rgba(52, 144, 220, 0.2);
+}
+
+.form-group {
+  display: block;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.form-group label,
+.form-group input {
+  width: 100%;
+  margin: 1px 3px;
+}
+
+.form-group.inline {
+  display: inline !important;
+}
+
+.form-group.inline label,
+.form-group.inline input {
+  width: initial !important;
+}
+
+.form-group label {
+  font-weight: bold;
+}
+
+.form-group input {
+  border: 0;
+  border-bottom: 1px solid #3490dc;
+}
+
+.row {
+  display: grid;
+}
+
+.row.cols-2 {
+  grid-template-columns: 1fr 2fr;
+}
+

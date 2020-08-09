@@ -1,0 +1,81 @@
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Nunito");
+
+// Variables
+@import "variables";
+
+a {
+    color: $blue;
+}
+
+button {
+    border: 0;
+    margin-right: 3px;
+    margin-left: 3px;
+    &.active {
+        background-color: $blue;
+        color: white;
+    }
+}
+
+table {
+    tr {
+        th,
+        td {
+            border-collapse: collapse;
+            padding: 1px 3px;
+        }
+    }
+    thead {
+        tr {
+            th {
+                border-bottom: 1px solid $blue;
+            }
+        }
+        &.primary {
+            background-color: $blue;
+            color: white;
+        }
+    }
+    tbody {
+        tr:hover {
+            td {
+                background-color: $trHover;
+            }
+        }
+    }
+}
+
+.form-group {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+    label,
+    input {
+        width: 100%;
+        margin: 1px 3px;
+    }
+    &.inline {
+        display: inline !important;
+        label,
+        input {
+            width: initial !important;
+        }
+    }
+    label {
+        font-weight: bold;
+    }
+    input {
+        border: 0;
+        border-bottom: 1px solid $blue;
+    }
+}
+
+.row {
+    display: grid;
+    &.cols-2 {
+        grid-template-columns: 1fr 2fr;
+        .col {
+        }
+    }
+}
