@@ -6,14 +6,22 @@
                     <th>Nombre(s)</th>
                     <th>Apellidos(s)</th>
                 </tr>
+                <!--
+                <tr>
+                    <th>
+                        <input type="number" v-model="filteredId" />
+                    </th>
+                    <th></th>
+                </tr>
+                -->
             </thead>
             <tbody>
                 <tr v-if="loading">
                     <td colspan="2" class="text-center">Cargando...</td>
                 </tr>
-                <template v-else-if="users.length">
+                <template v-else-if="usersList.length">
                     <tr
-                        v-for="(user, key) in users"
+                        v-for="(user, key) in usersList"
                         :key="key"
                         @click="showModalUser(user)"
                     >
@@ -48,6 +56,7 @@
 
 <script>
 import { fetchUsers } from "@/services/regres.in/api/users";
+import EventBus from "@/event-bus";
 const PAGES = [1, 2];
 
 export default {
@@ -56,6 +65,7 @@ export default {
         loading: false,
         users: [],
         page: 1,
+        filteredId: null,
     }),
     mounted() {
         this.$nextTick(this.search);
@@ -70,11 +80,9 @@ export default {
                     _app.$set(_app, "users", [...data.data]);
                 })
                 .catch((err) => {
-                    this.$emit("platform-error", {
+                    EventBus.$emit("platform-error", {
                         message: "Lo sentimos, intente más tarde.",
                     });
-
-                    alert("Lo sentimos, intente más tarde.");
 
                     if (err && err.response) {
                     }
@@ -89,6 +97,13 @@ export default {
     },
     computed: {
         pages: () => [...PAGES],
+        usersList() {
+            const _app = this;
+            if (_app.filteredId && _app.filteredId > 0) {
+                return _app.users.filter((row) => row.id == _app.filteredId);
+            }
+            return [..._app.users];
+        },
     },
     watch: {
         page() {
@@ -99,5 +114,3 @@ export default {
     },
 };
 </script>
-
-<style></style>

@@ -8,13 +8,18 @@ a {
     color: $blue;
 }
 
+.text-center {
+    text-align: center !important;
+}
+
 button {
     border: 0;
     margin-right: 3px;
     margin-left: 3px;
-    &.active {
+    background-color: rgba($blue, 60%);
+    color: white;
+    &.active, &:hover, &:focus {
         background-color: $blue;
-        color: white;
     }
 }
 

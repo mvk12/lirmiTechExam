@@ -2,15 +2,22 @@
   color: #3490dc;
 }
 
+.text-center {
+  text-align: center !important;
+}
+
 button {
   border: 0;
   margin-right: 3px;
   margin-left: 3px;
+  background-color: rgba(52, 144, 220, 0.6);
+  color: white;
 }
 
-button.active {
+button.active,
+button:hover,
+button:focus {
   background-color: #3490dc;
-  color: white;
 }
 
 table tr th,

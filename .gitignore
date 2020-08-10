@@ -4,7 +4,9 @@
 /storage/*.key
 /vendor
 .env
+.vue.env
 .env.backup
+.vue.env.backup
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml

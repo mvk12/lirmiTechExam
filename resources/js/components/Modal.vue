@@ -97,7 +97,7 @@ export default {
 }
 
 .close {
-    color: white;
+    color: black;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -107,9 +107,9 @@ export default {
         cursor: pointer;
     }
     &::after {
-        color: white;
+        color: black;
         content: " Cerrar";
-        font-size: 0.5em;
+        font-size: 0.45em;
     }
 }
 
@@ -121,7 +121,7 @@ export default {
 
 .modal-header,
 .modal-footer {
-    background-color: $blue;
-    color: white;
+    color: black;
+    background-color: white;
 }
 </style>

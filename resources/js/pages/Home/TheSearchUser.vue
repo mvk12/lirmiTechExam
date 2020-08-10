@@ -5,7 +5,7 @@
             <input
                 type="number"
                 min="1"
-                max="14"
+                max="140"
                 step="1"
                 inputmode="numeric"
                 required
@@ -20,6 +20,7 @@
 
 <script>
 import { fetchById } from "@/services/regres.in/api/users";
+import EventBus from "@/event-bus";
 
 export default {
     name: "TheSearchUser",
@@ -30,13 +31,18 @@ export default {
     methods: {
         search() {
             this.isSearchLoading = true;
-
-            fetchById({id: this.value})
+            fetchById({ id: this.value })
                 .then((data) => {
                     this.$emit("user-found", { ...data.data });
                 })
                 .catch((err) => {
-                    this.$emit("platform-error", {
+                    if (err && err.status === 404) {
+                        EventBus.$emit("platform-error", {
+                            message: "Usuario no encontrado.",
+                        });
+                        return;
+                    }
+                    EventBus.$emit("platform-error", {
                         message: "Lo sentimos, intente más tarde.",
                     });
                 })
@@ -47,5 +53,3 @@ export default {
     },
 };
 </script>
-
-<style></style>

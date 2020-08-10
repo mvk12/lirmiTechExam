@@ -29,15 +29,23 @@
                         :value="(user ? user.email : '')"
                     />
                 </div>
+                <div class="form-group">
+                    <button :disabled="isProgress">Registrar</button>
+                </div>
             </form>
         </div>
     </div>
 </template>
 
 <script>
+import { createProfesor } from "@/services/api/profesores";
+import EventBus from "@/event-bus";
+
 export default {
     name: "TheFormUser",
-    data: () => ({}),
+    data: () => ({
+        isProgress: false,
+    }),
     props: {
         user: {
             type: Object,
@@ -45,9 +53,27 @@ export default {
     },
     mounted() {},
     methods: {
-        doRegister(user) {},
+        doRegister(user) {
+            const _app = this;
+
+            _app.isProgress = true;
+
+            createProfesor({ ...user })
+                .then((data) => {
+                    alert(data.message || "Registrado exitosamente!");
+                })
+                .catch((err) => {
+                    EventBus.$emit("platform-error", {
+                        message: "Lo sentimos, intente más tarde.",
+                    });
+
+                    if (err && err.response) {
+                    }
+                })
+                .finally(() => {
+                    _app.isProgress = false;
+                });
+        },
     },
 };
 </script>
-
-<style></style>

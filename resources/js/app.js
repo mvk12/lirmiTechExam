@@ -36,3 +36,7 @@ const app = new Vue({
     router,
     render: (h) => h(App),
 });
+
+if(process.env.NODE_ENV != 'production') {
+    console.log({...process.env})
+}

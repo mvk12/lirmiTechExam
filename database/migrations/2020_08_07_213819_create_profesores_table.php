@@ -14,7 +14,10 @@ class CreateProfesoresTable extends Migration
     public function up()
     {
         Schema::create('profesores', function (Blueprint $table) {
-            $table->id();
+            $table->id()->comment('Primary key');
+            $table->string("first_name")->comment('First name');
+            $table->string("last_name")->comment('Last name');
+            $table->string("email")->comment('Email');
             $table->timestamps();
         });
     }

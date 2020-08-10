@@ -60,6 +60,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _services_api_profesores__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/services/api/profesores */ "./resources/js/services/api/profesores.js");
+/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/event-bus */ "./resources/js/event-bus.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -96,10 +104,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "TheFormUser",
   data: function data() {
-    return {};
+    return {
+      isProgress: false
+    };
   },
   props: {
     user: {
@@ -108,7 +121,25 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {},
   methods: {
-    doRegister: function doRegister(user) {}
+    doRegister: function doRegister(user) {
+      var _app = this;
+
+      _app.isProgress = true;
+      debugger;
+      Object(_services_api_profesores__WEBPACK_IMPORTED_MODULE_0__["createProfesor"])(_objectSpread({}, user)).then(function (data) {
+        _event_bus__WEBPACK_IMPORTED_MODULE_1__["default"].$emit("platform-error", {
+          message: data.message || 'Ok!'
+        });
+      })["catch"](function (err) {
+        _event_bus__WEBPACK_IMPORTED_MODULE_1__["default"].$emit("platform-error", {
+          message: "Lo sentimos, intente más tarde."
+        });
+
+        if (err && err.response) {}
+      })["finally"](function () {
+        _app.isProgress = false;
+      });
+    }
   }
 });
 
@@ -124,6 +155,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_regres_in_api_users__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/services/regres.in/api/users */ "./resources/js/services/regres.in/api/users.js");
+/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/event-bus */ "./resources/js/event-bus.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -151,6 +183,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "TheSearchUser",
   data: function data() {
@@ -169,7 +202,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }).then(function (data) {
         _this.$emit("user-found", _objectSpread({}, data.data));
       })["catch"](function (err) {
-        _this.$emit("platform-error", {
+        if (err && err.status === 404) {
+          _event_bus__WEBPACK_IMPORTED_MODULE_1__["default"].$emit("platform-error", {
+            message: "Usuario no encontrado."
+          });
+          return;
+        }
+
+        _event_bus__WEBPACK_IMPORTED_MODULE_1__["default"].$emit("platform-error", {
           message: "Lo sentimos, intente más tarde."
         });
       })["finally"](function () {
@@ -191,6 +231,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_regres_in_api_users__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/services/regres.in/api/users */ "./resources/js/services/regres.in/api/users.js");
+/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/event-bus */ "./resources/js/event-bus.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -257,6 +298,15 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 var PAGES = [1, 2];
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -265,7 +315,8 @@ var PAGES = [1, 2];
     return {
       loading: false,
       users: [],
-      page: 1
+      page: 1,
+      filteredId: null
     };
   },
   mounted: function mounted() {
@@ -273,8 +324,6 @@ var PAGES = [1, 2];
   },
   methods: {
     search: function search() {
-      var _this = this;
-
       var _app = this;
 
       _app.loading = true;
@@ -283,11 +332,9 @@ var PAGES = [1, 2];
       }).then(function (data) {
         _app.$set(_app, "users", _toConsumableArray(data.data));
       })["catch"](function (err) {
-        _this.$emit("platform-error", {
+        _event_bus__WEBPACK_IMPORTED_MODULE_1__["default"].$emit("platform-error", {
           message: "Lo sentimos, intente más tarde."
         });
-
-        alert("Lo sentimos, intente más tarde.");
 
         if (err && err.response) {}
       })["finally"](function () {
@@ -301,6 +348,17 @@ var PAGES = [1, 2];
   computed: {
     pages: function pages() {
       return [].concat(PAGES);
+    },
+    usersList: function usersList() {
+      var _app = this;
+
+      if (_app.filteredId && _app.filteredId > 0) {
+        return _app.users.filter(function (row) {
+          return row.id == _app.filteredId;
+        });
+      }
+
+      return _toConsumableArray(_app.users);
     }
   },
   watch: {
@@ -550,6 +608,10 @@ var render = function() {
               attrs: { type: "text", readonly: "" },
               domProps: { value: _vm.user ? _vm.user.email : "" }
             })
+          ]),
+          _vm._v(" "),
+          _c("button", { attrs: { disabled: _vm.isProgress } }, [
+            _vm._v("Registrar")
           ])
         ]
       )
@@ -671,8 +733,8 @@ var render = function() {
                   [_vm._v("Cargando...")]
                 )
               ])
-            : _vm.users.length
-            ? _vm._l(_vm.users, function(user, key) {
+            : _vm.usersList.length
+            ? _vm._l(_vm.usersList, function(user, key) {
                 return _c(
                   "tr",
                   {
@@ -1174,6 +1236,64 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/services/api/profesores.js":
+/*!*************************************************!*\
+  !*** ./resources/js/services/api/profesores.js ***!
+  \*************************************************/
+/*! exports provided: fetchProfesores, createProfesor, deleteProfesor */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchProfesores", function() { return fetchProfesores; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createProfesor", function() { return createProfesor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteProfesor", function() { return deleteProfesor; });
+var _window = window,
+    axios = _window.axios;
+var API_URL = Object({"NODE_ENV":"development","VUE_APP_BASE_URL":"http://localhost:8000"}).BASE_URL || "http://localhost:8000" || "";
+var fetchProfesores = function fetchProfesores(_ref) {
+  var page = _ref.page;
+  return axios.get(API_URL + "/api/v1/profesores", {
+    params: {
+      page: page
+    }
+  }, {
+    timeout: 3000
+  }).then(function (res) {
+    return Promise.resolve(res.data);
+  })["catch"](function (err) {
+    return Promise.reject(err.response);
+  });
+};
+var createProfesor = function createProfesor(_ref2) {
+  var first_name = _ref2.first_name,
+      last_name = _ref2.last_name,
+      email = _ref2.email;
+  return axios.post(API_URL + "/api/v1/profesores", {
+    first_name: first_name,
+    last_name: last_name,
+    email: email
+  }, {
+    timeout: 3000
+  }).then(function (res) {
+    return Promise.resolve(res.data);
+  })["catch"](function (err) {
+    return Promise.reject(err.response);
+  });
+};
+var deleteProfesor = function deleteProfesor(_ref3) {
+  var id = _ref3.id;
+  return axios["delete"](API_URL + "/api/v1/profesores/" + id, {}, {
+    timeout: 3000
+  }).then(function (res) {
+    return Promise.resolve(res.data);
+  })["catch"](function (err) {
+    return Promise.reject(err.response);
+  });
+};
+
+/***/ }),
+
 /***/ "./resources/js/services/regres.in/api/users.js":
 /*!******************************************************!*\
   !*** ./resources/js/services/regres.in/api/users.js ***!
@@ -1194,6 +1314,8 @@ var fetchUsers = function fetchUsers(_ref) {
     params: {
       page: page
     }
+  }, {
+    timeout: 100
   }).then(function (res) {
     return Promise.resolve(res.data);
   })["catch"](function (err) {
@@ -1206,6 +1328,8 @@ var fetchById = function fetchById(_ref2) {
     params: {
       id: id
     }
+  }, {
+    timeout: 100
   }).then(function (res) {
     return Promise.resolve(res.data);
   })["catch"](function (err) {

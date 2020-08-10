@@ -18,3 +18,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 */
+
+Route::group(['prefix' => '/v1', 'middleware' => 'cors'], function () {
+    Route::get('/profesores', 'Api\v1\ProfesorController@List');
+    Route::post('/profesores', 'Api\v1\ProfesorController@Create');
+    Route::delete(
+        '/profesores/{id}',
+        'Api\v1\ProfesorController@Delete'
+    )->where(['id' => '[0-9]+']);
+});
